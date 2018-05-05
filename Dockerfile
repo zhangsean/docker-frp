@@ -14,7 +14,8 @@ RUN addgroup -S frp \
 
 ADD entrypoint.sh /frp/entrypoint.sh
 
-RUN chown -R frp:frp /frp
+RUN chown -R frp:frp /frp \
+ && chmod +x /frp/entrypoint.sh
 
 USER frp
 
