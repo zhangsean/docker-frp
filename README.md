@@ -21,7 +21,7 @@ Start a frp client, expose local port `22` of server `192.168.1.20` to remote po
 docker run -itd --name frpc -e MODE=client -e SERVER_ADDR=frp.example.com -e SERVER_PORT=7000 -e PROTO=tcp -e LOCAL_IP=192.168.1.20 -e LOCAL_PORT=22 -e REMOTE_PORT=6000 zhangsean/frp
 ```
 
-Then you can connect to frp.example.com:6000 just like directly connect to your internal server 192.168.1.20:22
+Then you can ssh to `frp.example.com:6000` from internet, just like directly ssh to your server `192.168.1.20:22` from internal.
 ```
 ssh -p 6000 root@frp.example.com
 ```
