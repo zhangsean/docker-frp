@@ -9,16 +9,16 @@ Docker image for [fatedier/frp](https://github.com/fatedier/frp).
 
 #### frp Server
 
-Start a frp server with default port 7000 and reverse proxy port 6000.
+Start a frp server with connection port `7000` and reverse proxy port `6000`, expose `6000` and `7000` ports in your internet firewall or load balancer which resole `frp.example.com` to.
 ```
-docker run -itd -p 7000:7000 -p 6000:6000 zhangsean/frp
+docker run -itd --name frps -p 7000:7000 -p 6000:6000 zhangsean/frp
 ```
 
 #### frp Client
 
-Start a frp client expose local port 22 of server 192.168.1.20 to remote port 6000 of server frp.example.com
+Start a frp client, expose local port `22` of server `192.168.1.20` to remote port `6000` of server `frp.example.com`.
 ```
-docker run -itd -e MODE=client -e SERVER_ADDR=frp.example.com -e SERVER_PORT=7000 -e PROTO=tcp -e LOCAL_IP=192.168.1.20 -e LOCAL_PORT=22 -e REMOTE_PORT=6000 zhangsean/frp
+docker run -itd --name frpc -e MODE=client -e SERVER_ADDR=frp.example.com -e SERVER_PORT=7000 -e PROTO=tcp -e LOCAL_IP=192.168.1.20 -e LOCAL_PORT=22 -e REMOTE_PORT=6000 zhangsean/frp
 ```
 
 Then you can connect to frp.example.com:6000 just like directly connect to your internal server 192.168.1.20:22
@@ -38,4 +38,4 @@ LOCAL_PORT | Port | 22 | local service port
 REMOTE_PORT | Port | 6000 | remote reverse port
 
 ## Find more
-Please go to [fatedier/frp](https://github.com/fatedier/frp) find more.
+Please visit [fatedier/frp](https://github.com/fatedier/frp) for more.
