@@ -12,7 +12,7 @@ else
     sed -i "s|server_addr = 127.0.0.1|server_addr = $SERVER_ADDR|g" /frp/frpc.ini
   fi
   if [ $PROXY_NAME ]; then
-    sed -i "s|[ssh]|[$PROXY_NAME]|g" /frp/frpc.ini
+    sed -i "s|ssh|$PROXY_NAME|g" /frp/frpc.ini
   fi
   if [ $SERVER_PORT ]; then
     sed -i "s|server_port = 7000|server_port = $SERVER_PORT|g" /frp/frpc.ini
