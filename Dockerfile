@@ -2,7 +2,7 @@ FROM alpine
 
 MAINTAINER ZhangSean <zxf2342@qq.com>
 
-ENV FRP_VERSION 0.31.0
+ENV FRP_VERSION 0.31.1
 
 RUN addgroup -S frp \
  && adduser -D -S -h /var/frp -s /sbin/nologin -G frp frp \
