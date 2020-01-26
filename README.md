@@ -36,7 +36,8 @@ Name | Type | Default | Description
 -|-|-|-
 MODE | server or client | server | running model
 BIND_PORT | Port | 7000 | server bind port
-PROXY_NAME | String | ssh | proxy name, unique name is required in same server.
+PROXY_NAME | String | ssh | proxy name, unique name is required in same server
+SERVER_ADDR | Domain or IP | 127.0.0.1 | server address
 SERVER_PORT | Port | 7000 | remote server port
 PROTO | tcp / udp / http / https / stcp / xtcp | tcp | local proto
 LOCAL_IP | IP | 127.0.0.1 | local server IP
