@@ -1,0 +1,59 @@
+#=================================================
+# https://github.com/zhangsean/docker-frp
+# Description: Auto check latest frp release and tag zhangsean/frp using GitHub Actions
+# License: Apache V2.0
+# Author: ZhangSean
+#=================================================
+
+name: Follow up frp release
+
+on:
+  schedule:
+    - cron: 1 23 * * *
+  watch:
+    types: [started]
+    if: github.event.repository.owner.id == github.event.sender.id
+  push:
+    paths:
+      - '.github/workflows/*.yml'
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+
+      - name: Check frp release
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          git fetch --tags
+          export CURRENT=$(git tag | tail -n 1)
+          echo "CURRENT=$CURRENT"
+          export LATEST=$(curl -sSI https://github.com/fatedier/frp/releases/latest | grep -i location | awk -F/ '{print $8}')
+          echo "LATEST=$LATEST"
+          if [ "$LATEST" != "$CURRENT" ]; then
+            echo "New frp release: $LATEST"
+            echo "::set-env name=LATEST::$LATEST"
+          else
+            echo "No new frp release"
+            echo "::set-env name=LATEST::"
+          fi
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        if: success() && env.LATEST != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.LATEST }}
+          release_name: ${{ env.LATEST }}
+          body: |
+            Bump to kubectl ${{ env.LATEST }}
+          draft: false
+          prerelease: false
