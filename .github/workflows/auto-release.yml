@@ -54,6 +54,6 @@ jobs:
           tag_name: ${{ env.LATEST }}
           release_name: ${{ env.LATEST }}
           body: |
-            Bump to kubectl ${{ env.LATEST }}
+            Bump to frp ${{ env.LATEST }}
           draft: false
           prerelease: false
