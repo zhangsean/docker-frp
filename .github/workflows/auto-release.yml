@@ -35,7 +35,7 @@ jobs:
           git fetch --tags
           export CURRENT=$(git tag | tail -n 1)
           echo "CURRENT=$CURRENT"
-          export LATEST=$(curl -sSI https://github.com/fatedier/frp/releases/latest | grep -i location | awk -F/ '{print $8}' | sed 's/.$//')
+          export LATEST=$(curl -sSI https://github.com/fatedier/frp/releases/latest | sed -n '/ocation/s/.*\(v.*\)./\1/p')
           echo "LATEST=$LATEST"
           if [ "$LATEST" != "$CURRENT" ]; then
             echo "New frp release: $LATEST"
