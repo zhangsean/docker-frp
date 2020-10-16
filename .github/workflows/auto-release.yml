@@ -39,10 +39,11 @@ jobs:
           echo "LATEST=$LATEST"
           if [ "$LATEST" != "$CURRENT" ]; then
             echo "New frp release: $LATEST"
-            echo "::set-env name=LATEST::$LATEST"
+            echo "CURRENT=$CURRENT" >> $GITHUB_ENV
+            echo "LATEST=$LATEST" >> $GITHUB_ENV
           else
             echo "No new frp release"
-            echo "::set-env name=LATEST::"
+            echo "LATEST=" >> $GITHUB_ENV
           fi
 
       - name: Create Release
