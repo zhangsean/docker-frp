@@ -35,7 +35,7 @@ jobs:
           git fetch --tags
           export CURRENT=$(git tag | tail -n 1)
           echo "CURRENT=$CURRENT"
-          export LATEST=$(curl -sSI https://github.com/fatedier/frp/releases/latest | sed -n '/ocation/s/.*\(v.*\)./\1/p')
+          export LATEST=$(curl -sSI https://github.com/fatedier/frp/releases/latest | sed -n '/frp/s/.*\(v.*\)./\1/p')
           echo "LATEST=$LATEST"
           if [ "$LATEST" != "$CURRENT" ]; then
             echo "New frp release: $LATEST"
@@ -45,6 +45,21 @@ jobs:
             echo "No new frp release"
             echo "LATEST=" >> $GITHUB_ENV
           fi
+
+      - name: Bump to new frp version
+        if: success() && env.CURRENT != '' && env.LATEST != ''
+        env:
+          DEBIAN_FRONTEND: noninteractive
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Bump frp version from $CURRENT to $LATEST"
+          sed -i "/FRP_VERSION/s/$CURRENT/$LATEST/g" Dockerfile
+          sed -i "/latest/a * $LATEST" README.md
+          # commit and push
+          git config user.email zxf2342@qq.com
+          git config user.name zhangsean
+          git commit -a -m "Bump to frp $LATEST"
+          git push
 
       - name: Create Release
         uses: actions/create-release@v1
