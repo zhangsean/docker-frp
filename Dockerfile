@@ -11,7 +11,8 @@ RUN addgroup -S frp \
  && apk add --no-cache curl \
  && curl -fSL https://github.com/fatedier/frp/releases/download/${FRP_VERSION}/frp_${FRP_VERSION:1}_linux_amd64.tar.gz -o frp.tar.gz \
  && tar -zxv -f frp.tar.gz \
- && mv frp_${FRP_VERSION}_linux_amd64 /frp \
+ && rm -rf frp.tar.gz \
+ && mv frp_*_linux_amd64 /frp \
  && chown -R frp:frp /frp \
  && mv /entrypoint.sh /frp/
 
