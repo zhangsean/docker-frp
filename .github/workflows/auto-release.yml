@@ -60,6 +60,8 @@ jobs:
           git config user.name zhangsean
           git commit -a -m "Bump to frp $LATEST"
           git push
+          git tag "$LATEST"
+          git push --tags
           export SHA=$(git branch -v | awk '{print $3}')
           echo "SHA=$SHA" >> $GITHUB_ENV
 
