@@ -67,11 +67,10 @@ jobs:
 
       - name: Create Release
         uses: actions/create-release@v1
-        if: success() && env.LATEST != '' && env.SHA != ''
+        if: success() && env.LATEST != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          commitish: ${{ env.SHA }}
           tag_name: ${{ env.LATEST }}
           release_name: ${{ env.LATEST }}
           body: |
