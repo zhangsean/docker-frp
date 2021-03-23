@@ -9,7 +9,7 @@ name: Follow up frp release
 
 on:
   schedule:
-    - cron: 1 23 * * *
+    - cron: 1 15 * * *
   watch:
     types: [started]
     if: github.event.repository.owner.id == github.event.sender.id
