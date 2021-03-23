@@ -60,17 +60,19 @@ jobs:
           git config user.name zhangsean
           git commit -a -m "Bump to frp $LATEST"
           git push
-          echo "TAG=$LATEST" >> $GITHUB_ENV
+          export SHA=$(git branch -v | awk '{print $3}')
+          echo "SHA=$SHA" >> $GITHUB_ENV
 
       - name: Create Release
         uses: actions/create-release@v1
-        if: success() && env.TAG != ''
+        if: success() && env.LATEST != '' && env.SHA != ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.TAG }}
-          release_name: ${{ env.TAG }}
+          commitish: ${{ env.SHA }}
+          tag_name: ${{ env.LATEST }}
+          release_name: ${{ env.LATEST }}
           body: |
-            Bump to frp ${{ env.TAG }}
+            Bump to frp ${{ env.LATEST }}
           draft: false
           prerelease: false
