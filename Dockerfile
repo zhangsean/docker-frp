@@ -2,7 +2,7 @@ FROM alpine
 
 LABEL MAINTAINER "ZhangSean <zxf2342@qq.com>"
 
-ENV FRP_VERSION=v0.40.0
+ENV FRP_VERSION=v0.41.0
 
 ADD entrypoint.sh /entrypoint.sh
 
